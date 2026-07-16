@@ -1,0 +1,4 @@
+import pandas as pd
+# Load data into pandas DataFrame from "/lakehouse/default/" + "Files/MtoMActual.csv"
+df = pd.read_csv("/lakehouse/default/Files/MtoMActual.csv")
+display(df)
