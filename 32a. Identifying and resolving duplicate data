@@ -1,0 +1,6 @@
+df = spark.read.table("mtomactualcombined")
+display(df.distinct())
+
+display(df.groupBy("Country","Location","Actual").count().where("count>1"))
+
+display(df.dropDuplicates(["Country"]))
