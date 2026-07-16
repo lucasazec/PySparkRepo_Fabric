@@ -1,0 +1,6 @@
+df = spark.read.option("header","true").format("csv").load("Files/MtoMActual.csv")
+df2 =
+spark.read.csv("abfss://FabricWorkspace@onelake.dfs.fabric.microsoft.com/DemoLakehouse.Lakehouse/Files/MtoMActual.csv")
+df2 =
+spark.read.load("abfss://FabricWorkspace@onelake.dfs.fabric.microsoft.com/DemoLakehouse.Lakehouse/Files/MtoMActual.csv",
+format='csv', header=True)
