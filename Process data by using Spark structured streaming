@@ -1,0 +1,37 @@
+Step 1 – retrieve the schema for the Lakehouse table
+df = spark.read.format("csv").option("header","true").load("Files/Shopping.csv")
+df.schema
+
+Step 2 – load the stream with the specified schema
+from pyspark.sql.types import StructType, StructField, StringType
+schema = StructType([
+ StructField("Date", StringType(), True),
+ StructField("Subtype", StringType(), True),
+ StructField("ShopaseMethod", StringType(), True),
+ StructField("Out", StringType(), True)
+])
+dfs = spark.readStream.option("header", "true").schema(schema).format("csv").load("Files/Shop*.csv")
+
+Step 3 – Write the deduplicated stream to a Delta Lake table
+dfs = spark.readStream.option("header", "true").schema(schema).format("csv").load("Files/Shop*.csv")
+deltatablepath = "Tables/Shop_table"
+query = dfs.writeStream.format("delta").outputMode("append") \
+ .option("checkpointLocation", deltatablepath + '/_checkpoint') \
+ .option("path", deltatablepath).start()
+
+Step 4 – Wait for the streaming query to finish
+query.awaitTermination()
+Final version for the Spark Job Definition
+from pyspark.sql import SparkSession
+from pyspark.sql.types import StructType, StructField, StringType
+spark = SparkSession.builder.getOrCreate()
+schema = StructType([StructField('Date', StringType(), True),
+StructField('Subtype', StringType(), True),
+StructField('PurchaseMethod', StringType(), True),
+StructField('Out', StringType(), True)])
+dfs = spark.readStream.option("header", "true").schema(schema).format("csv").load("Files/Shop*.csv")
+deltatablepath = "Tables/Shop_table"
+query = dfs.writeStream.format("delta").outputMode("append") \
+ .option("checkpointLocation", deltatablepath + '/_checkpoint') \
+ .option("path", deltatablepath).start()
+query.awaitTermination()
