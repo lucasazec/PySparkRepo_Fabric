@@ -1,0 +1,4 @@
+df = spark.read.table("mtomactual")
+df = df.select(df.Country, df.Location, df.Actual.cast("int"))
+display(df)
+display(df.describe(["Country", "Actual"]).show())
