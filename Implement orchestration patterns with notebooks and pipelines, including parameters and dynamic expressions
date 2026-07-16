@@ -1,0 +1,9 @@
+ParameterCountry = "England"
+df = spark.read.table("Mtomactual")
+df = df.where(df.Country == ParameterCountry)
+display(df)
+df.write.mode("overwrite").format("delta").saveAsTable("MtoMActualExtract")
+df2 = spark.read.table("MtomactualExtract")
+display(df2)
+
+# Add Base parameters: Parameter Name = ParameterCountry; Type = String; Value = France or Italy
