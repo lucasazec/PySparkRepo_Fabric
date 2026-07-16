@@ -1,0 +1,16 @@
+dfactual = spark.read.table("mtomactual")
+dftarget = spark.read.format("csv").option("header","true").load("Files/MtoMTarget.csv")
+dftarget.write.mode("overwrite").format("delta").saveAsTable("MtoMTarget")
+display(dfactual)
+display(dftarget)
+dfactual = dfactual.select(dfactual.Country, dfactual.Actual.cast("int")) \
+.groupBy("Country").sum("Actual").withColumnRenamed("sum(Actual)","ActualTotal")
+display(dfactual)
+dftarget = dftarget.select(dftarget.Country, dftarget.Target.cast("int")) \
+.groupBy("Country").sum("Target").withColumnRenamed("sum(Target)","TargetTotal")
+display(dftarget)
+dfactual.write.mode("overwrite").format("delta").saveAsTable("MtoMActualSum")
+dftarget.write.mode("overwrite").format("delta").saveAsTable("MtoMTargetSum")
+dfjoin = dfactual.join(dftarget, dfactual.Country == dftarget.Country)
+display(dfjoin)
+display(dfactual.join(dftarget, "Country"))
