@@ -1,0 +1,4 @@
+df.collect()
+df.schema
+df.summary()
+df.show()
