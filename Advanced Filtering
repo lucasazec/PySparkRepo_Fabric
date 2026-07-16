@@ -1,0 +1,7 @@
+df = spark.read.table("mtomactualwithdates")
+display(df.where(df.Actual.between(6000, 11000)))
+display(df.where(df.Country.contains("n")))
+display(df.where(df.Country.like("%n_")))
+display(df.where("Country = 'England' OR Country = 'France'"))
+display(df.where( (df.Country == 'England') | (df.Country == 'France')) ) # | = OR, & = AND, ~ = NOT
+display(df.where(df.Country.isin("England", "France")))
