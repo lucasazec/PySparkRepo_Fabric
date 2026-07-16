@@ -1,0 +1,8 @@
+df = spark.read.table("mtomactualstruct")
+# display(df.orderBy("Location"))
+# display(df.orderBy(df.Location))
+# display(df.orderBy(asc(df.Location)))
+# display(df.orderBy(desc(df.Country), df.Location))
+# display(df.sort(desc("Country"), "Location"))
+# display(df.sort("Country", ascending=False))
+display(df.sort(df.Country.desc(), df.Location.asc()))
