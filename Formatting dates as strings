@@ -1,0 +1,6 @@
+from pyspark.sql.functions import *
+df = spark.read.table("mtomactualwithdates")
+df = df.select(df.Country, df.Location, df.Actual.cast("int"), \
+concat(lit("The date is: "),date_format(df.ColDate, "EEEE d MMMM yyyy")).alias("FormattedDate")
+)
+display(df)
