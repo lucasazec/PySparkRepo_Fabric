@@ -1,0 +1,5 @@
+display(dfjoin.where(dfjoin.ActualTotal.isNull()))
+
+dfjoin = dfjoin.fillna({"ActualCountry":"(No Actual)"})
+dfjoin = dfjoin.fillna({"TargetCountry":"(No Target)"})
+dfjoin = dfjoin.na.fillna(0)
