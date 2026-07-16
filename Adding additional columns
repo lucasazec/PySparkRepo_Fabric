@@ -1,0 +1,10 @@
+df = spark.read.table("Mtomactual")
+display(df.withColumn("ActualDoubled", df.Actual * 2)\
+.withColumn("SecondLetter", df.Country.substr(2,1))
+)
+from pyspark.sql.functions import *
+df2 = df.withColumn("ColDate", add_months(lit("2028-01-01"), df.Actual/1000))
+display(df2)
+df2.write.mode("overwrite").format("delta").saveAsTable("MtoMActualWithDates")
+df = spark.read.table("mtomactualwithdates")
+display(df)
