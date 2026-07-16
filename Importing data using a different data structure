@@ -1,0 +1,11 @@
+from pyspark.sql.types import *
+schemaTarget = StructType([StructField('Country', StringType(), True),
+StructField('Location', StringType(), True),
+StructField('Actual', IntegerType(), True)])
+df = spark.read.option("header","true").format("csv").schema(schemaTarget).load("Files/MtoMActual.csv")
+display(df)
+df.schema
+df.write.format("delta").saveAsTable("mtomactualstruct")
+df = spark.read.table("mtomactualstruct")
+display(df)
+df.schema
