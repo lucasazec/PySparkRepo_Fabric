@@ -1,0 +1,7 @@
+dfbridge.explain(True)
+spark.sql("CACHE TABLE mtomactual")
+spark.conf.get('spark.ms.autotune.enabled')
+spark.conf.set('spark.ms.autotune.enabled', 'true')
+spark.conf.get('spark.sql.shuffle.partitions')
+spark.conf.get('spark.sql.autoBroadcastJoinThreshold')
+spark.conf.get('spark.sql.files.maxPartitionBytes')
