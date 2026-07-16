@@ -1,0 +1,6 @@
+df = spark.read.table("Mtomactual")
+dfreduced = df.select(df.Country, df.Actual.alias("ActualSales"))
+display(dfreduced.where("ActualSales > 10000")) # Use >, <, >=, <=, = or ==, != or <>
+display(dfreduced.filter(dfreduced.Country == "England")) # Use >, <, >=, <=, ==, !=. Cannot use = or <>
+display(dfreduced.limit(3))
+display(dfreduced.tail(2))
