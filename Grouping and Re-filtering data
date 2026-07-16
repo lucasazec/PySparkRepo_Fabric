@@ -1,0 +1,5 @@
+df = spark.read.table("mtomactualstruct")
+display(df.groupBy("Country").sum("Actual")\
+.withColumnRenamed("sum(Actual)","ActualTotal")\
+.where("ActualTotal>10000")
+)
