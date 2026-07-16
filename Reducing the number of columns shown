@@ -1,0 +1,6 @@
+dfreduced = df.select("Country", "Actual") # This is not case sensitive.
+display(dfreduced)
+dfreduced = df.select(df.Country, df.Actual) # This IS case sensitive.
+display(dfreduced)
+dfreduced = df.select(df.Country, df.Actual.alias("ActualSales"))
+display(dfreduced)
